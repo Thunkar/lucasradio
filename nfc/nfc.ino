@@ -1,13 +1,16 @@
-#include <SPI.h>
-#include <PN532_SPI.h>
+#include "Arduino.h"
+#include <PN532_I2C.h>
 #include <PN532.h>
 #include <NfcAdapter.h>
 
-PN532_SPI pn532spi(SPI, 7);
-NfcAdapter nfc = NfcAdapter(pn532spi);
+PN532_I2C pn532i2c(Wire);
+NfcAdapter nfc = NfcAdapter(pn532i2c);
 
 void setup(void) {
   Serial.begin(9600);
+  while(!Serial) {
+    ;
+  }
   Serial.println("Hello!");
 
   nfc.begin();
@@ -98,9 +101,6 @@ void loop(void) {
           Serial.print("  ID: ");Serial.println(uid);
         }
       }
-    } else {
-      Serial.println("Formatting as NDEF...");
-      nfc.format();
     }
   }
 }
