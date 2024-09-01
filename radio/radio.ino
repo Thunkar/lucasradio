@@ -12,7 +12,6 @@
 #include "AudioLibs/AudioSourceSDFAT.h" // or AudioSourceIdxSDFAT.h
 #include "AudioCodecs/CodecMP3Helix.h"
 
-
 const char *startFilePath="/";
 const char* ext="mp3";
 SdSpiConfig sdcfg(PIN_AUDIO_KIT_SD_CARD_CS, DEDICATED_SPI, SD_SCK_MHZ(10) , &SPI);
@@ -20,6 +19,7 @@ AudioSourceSDFAT source(startFilePath, ext, sdcfg);
 AudioBoardStream kit(AudioKitEs8388V1);
 MP3DecoderHelix decoder;  // or change to MP3DecoderMAD
 AudioPlayer player(source, kit, decoder);
+String currentFolder;
 
 void volumeUp(bool, int, void*) {
   float currentVolume = player.volume();
@@ -35,8 +35,19 @@ void startStop(bool, int, void*) {
    player.setActive(!player.isActive());
 }
 
+void previous(bool, int, void*) {
+  source.setPath(currentFolder.c_str());
+  player.previous();
+}
+
+void next(bool, int, void*) {
+  source.setPath(currentFolder.c_str());
+  player.next();
+}
+
 void setup() {
   Serial.begin(9600);
+  Serial.setTimeout(10);
   AudioLogger::instance().begin(Serial, AudioLogger::Warning);
 
   // setup output
@@ -46,15 +57,16 @@ void setup() {
  // setup additional buttons 
   kit.addDefaultActions();
   kit.addAction(kit.getKey(1), startStop);
-  kit.addAction(kit.getKey(4), volumeUp);
-  kit.addAction(kit.getKey(3), volumeDown);
+  kit.addAction(kit.getKey(3), previous);
+  kit.addAction(kit.getKey(4), next);
+  kit.addAction(kit.getKey(5), volumeDown);
+  kit.addAction(kit.getKey(6), volumeUp);
 
 
   // setup player
   player.setVolume(0.7);
   player.setSilenceOnInactive(true);
-  player.begin();
-  player.setActive(false);
+  player.begin(0, false);
 }
 
 
@@ -62,11 +74,17 @@ void loop() {
   player.copy();
   kit.processActions();
   if (Serial.available() > 0) {
-    String song = Serial.readString();
-    if(song.endsWith(".mp3")) {
-      Serial.print("Received song: ");
-      Serial.println(song);
-      player.setPath(song.c_str());
+    String command = Serial.readString();
+    if(command.startsWith("P->") && command.endsWith("\n")) {
+      player.end();
+      command.trim();
+      Serial.print("Received command: ");
+      Serial.println(command);
+      currentFolder = command.substring(3);
+      Serial.print("Selecting folder: ");
+      Serial.println(currentFolder);
+      source.setPath(currentFolder.c_str());
+      player.begin(0, false);
     }
   }
 }
