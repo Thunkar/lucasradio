@@ -2,6 +2,10 @@
 
 Uses a ESP32 A1S + PN532 NFC reader to mimic and old-school walkman
 
+<img src="https://github.com/user-attachments/assets/a9f5c5d3-2e27-4fe0-b451-c024aa19bd1c" width="500">
+<br/>
+<img src="https://github.com/user-attachments/assets/28908ec0-2d63-413b-8d3d-23cb4a0d11ae" width="500">
+
 # BOM
 
 * ESP32 A1S ES8388 v2.2: https://es.aliexpress.com/item/4000130915903.html?spm=a2g0o.order_list.order_list_main.28.4f82194dt8NG1n&gatewayAdapt=glo2esp
