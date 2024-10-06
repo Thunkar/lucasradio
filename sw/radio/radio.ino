@@ -7,25 +7,30 @@
 #include <PN532_I2C_CUSTOM.h>
 #include <PN532.h> // https://github.com/elechouse/PN532
 #include <NfcAdapter.h> // https://github.com/don/NDEF
+#include "AudioKitEs8388v1Custom.h"
 
-//#define NDEF_USE_SERIAL 0
-#define LID_PIN 22
-//#define DEBUG
+// We are not using aux in, so we don't care about jack detection and can reuse the pin
+#define LID_PIN 12
+
+#define DEBUG
+
+#ifdef DEBUG
+#define NDEF_USE_SERIAL 0
+#endif
 
 // Use I2C Bus 1 to avoid audio conflicts
 TwoWire customI2C = TwoWire(1);
-// We have to reuse UART pins because we run out. This means no legible serial output. 
-// Alternatives are: 
-// 3, 22 (move lid to 21) -> Audio cannot start if the lid is closed on startup due to PA amp being on pin 21
-// 3, 5 -> Volume buttons get crazy
-PN532_I2C_CUSTOM pn532i2c(customI2C, 3, 1);
+// We have to reuse UART RX pin and LED pin because we run out of IO
+PN532_I2C_CUSTOM pn532i2c(customI2C, 22, 3);
 NfcAdapter nfc = NfcAdapter(pn532i2c);
 
 const char* startFilePath = "empty";
 const char* ext = "mp3";
 SdSpiConfig sdcfg(PIN_AUDIO_KIT_SD_CARD_CS, DEDICATED_SPI, SD_SCK_MHZ(10), &SPI);
 AudioSourceSDFAT source(startFilePath, ext, sdcfg);
-AudioBoardStream kit(AudioKitEs8388V1);
+PinsAudioKitEs8388v1CustomClass PinsAudioKitEs8388v1Custom;
+AudioBoard AudioKitEs8388v1Custom(AudioDriverES8388, PinsAudioKitEs8388v1Custom);
+AudioBoardStream kit(AudioKitEs8388v1Custom);
 MP3DecoderHelix decoder;
 AudioPlayer player(source, kit, decoder);
 String currentFolder;
@@ -130,10 +135,9 @@ void setup() {
   // Setup serial
   Serial.begin(9600);
   Serial.setTimeout(10);
-  #endif
-
   // Setup logging
   AudioLogger::instance().begin(Serial, AudioLogger::Warning);
+  #endif
 
   // Setup output
   auto cfg = kit.defaultConfig(TX_MODE);
