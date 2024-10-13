@@ -12,11 +12,13 @@ Switches should be in the following configuration: **ON | ON | ON | OFF | OFF**
 
 The battery cables should be long enough to run underneath the ESP32 when mounted to the base. The switch should interrupt one of them:
 
-<img src="./img/battery-connection.png" width="500">
+<img src="./img/battery-connection.jpg" width="500">
 
 ## Hall effect sensor
 
 The hall effect sensor *MUST* be mounted with the beveled side facing **UP**. Only one magnet orientation is going to trigger it, so it is recommended to test this before finalizing the assembly.
+
+<img src="./img/hall-effect-sensor-connection.jpg" width="500">
 
 ## NFC
 Make sure the PN532 is in I2C mode!
@@ -25,9 +27,23 @@ Make sure the PN532 is in I2C mode!
 
 After that, connect it as follows:
 
-<img src="./img/nfg-connection.png" width="500">
+<img src="./img/nfc-connection.jpg" width="500">
+
+## Speakers
+
+Solder the speakers as follows:
+
+<img src="./img/speaker-connection.jpg" width="500">
+
+## Putting it all together
+
+<img src="./img/wiring.png" width="500">
 
 # Assembly
 
 Check out the diagram below to understand how it all fits together. It is recommended to do the wiring first! <br/>
-<img src="./img/diagram.jpg" width="500">
+<img src="./img/diagram.png" width="500">
+
+Every button has a spring underneath it, and the lid requires another one so that it opens automatically.
+
+The ejection mechanism requires the magnet in the button and the lock to be oriented so they repel each other. *DO NOT TIGHTEN* the screw that holds the lock or it won't work! Worst case scenario, the holder can break and a new base would have to be printed.
