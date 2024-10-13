@@ -6,7 +6,7 @@ Uses a ESP32 A1S + PN532 NFC reader to mimic and old-school walkman
 
 # Printing
 
-PLA is fine, tolerances should allow for some wiggle room if your printer is not totally dialed in. Tested at 0.2mm layer height. Don't forget to follow on [printables](https://www.printables.com/model/1038471-nfc-walkman)
+PLA is fine, tolerances should allow for some wiggle room if your printer is not totally dialed in. Tested at 0.2mm layer height. Don't forget to follow on [printables](https://www.printables.com/model/1038471-nfc-walkman)!
 
 # Ordering parts
 
@@ -16,7 +16,7 @@ You can check out the BOM [here](./docs/BOM.md)
 
 Check out the guide [here](./docs/assembly.md)
 
-# Flash the code
+# Flashing the code
 
 The ESP32 A1S should be flashed with the `radio.ino` file. 
 
