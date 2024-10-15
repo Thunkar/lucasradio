@@ -2,7 +2,7 @@
 
 Uses a ESP32 A1S + PN532 NFC reader to mimic and old-school walkman
 
-<img src="./docs/img/closed.jpg" height="500"><img src="./docs/img/render.jpg" height="500">
+<img src="./docs/img/closed.jpg" width="500"><img src="./docs/img/render.jpg" width="500">
 
 # Printing
 
@@ -29,7 +29,6 @@ The ESP32 A1S should be flashed with the `radio.ino` file.
 4. Click on upload!
 
 
-Select the ESP32 Dev Module
 
 # Operation
 
