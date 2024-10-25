@@ -36,6 +36,6 @@ The ESP32 A1S should be flashed with the `radio.ino` file.
 2. Print some cassetes, and write an NFC tag for each, following the convention `P->foldername`. For example, if I have a folder in the SD card for "myalbum", the NFC tag should be written with a text record containing `P->myalbum`. (I used [Android NFC tools](https://play.google.com/store/apps/details?id=com.wakdev.wdnfc&hl=en) for this).
 3. That's it! Turn on your walkman, insert your tape, and press play!
 
-# Acknoledgements
+# Acknowledgements
 
 * [Cassette model](https://www.printables.com/model/505572-cassette-tape) remixed from [Pete Farell](https://www.printables.com/@PeterFarell)'s design.
